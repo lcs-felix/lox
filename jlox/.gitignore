@@ -1,5 +1,12 @@
-# Ignore Gradle project-specific cache directory
-.gradle
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
 
-# Ignore Gradle build output directory
-build
+bin
+.idea/
+.gradle/
