@@ -29,9 +29,9 @@ public class Scanner {
 
     private final List<Token> tokens = new ArrayList<>();
     private final String source;
-    private int line = 0;
+    private int line = 1;
     private int start = 0;
-    private int current = 1;
+    private int current = 0;
     
     public Scanner(String source) {
         this.source = source;
@@ -61,10 +61,10 @@ public class Scanner {
             case '+' -> addToken(PLUS);
             case ';' -> addToken(SEMICOLON);
             case '*' -> addToken(STAR);
-            case '!' -> addToken(match('=') ? BANG_EQUAL : BANG);
-            case '=' -> addToken(match('=') ? EQUAL : EQUAL_EQUAL);
-            case '<' -> addToken(match('=') ? LESS : LESS_EQUAL);
-            case '>' -> addToken(match('=') ? GREATER : GREATER_EQUAL);
+            case '!' -> addToken(match('=') ? BANG : BANG_EQUAL);
+            case '=' -> addToken(match('=') ? EQUAL_EQUAL : EQUAL);
+            case '<' -> addToken(match('=') ? LESS_EQUAL : LESS);
+            case '>' -> addToken(match('=') ? GREATER_EQUAL: GREATER);
             case '/' -> {
                 if(match('/')) {
                     while(peek() != '\n' && !isAtEnd()) {
@@ -134,7 +134,7 @@ public class Scanner {
     }
 
     private void string() {
-        if(peek() != '"' && !isAtEnd()) {
+        while(peek() != '"' && !isAtEnd()) {
             if(peek() == '\n') {
                 line++;
             }
@@ -147,6 +147,8 @@ public class Scanner {
             return;
         }
         
+        advance();
+
         var stringLiteral = source.substring(start + 1, current - 1);
         addToken(STRING, stringLiteral);
     }
